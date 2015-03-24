@@ -54,14 +54,14 @@ RUN wget -O /usr/local/bin/docker-machine https://github.com/docker/machine/rele
 
 # Fuzzy history utility. Seems nicer than hh.
 RUN git clone https://github.com/junegunn/fzf.git /home/.fzf \
-    && (cd /home/.fzf && git checkout 0.9.3) \
+    && (cd /home/.fzf && git checkout 0.9.4) \
     && (yes | /home/.fzf/install)
 
 RUN wget -O - https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | \
     tar -C /usr/local -xz
 
 # Interactive grep is pretty nice!
-RUN pip install percol==0.0.8
+RUN pip install percol==0.1.0
 
 ADD https://raw.githubusercontent.com/junegunn/vim-plug/0.5.7/plug.vim \
     /home/.vim/autoload/plug.vim
