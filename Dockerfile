@@ -44,6 +44,10 @@ RUN echo 'source ~/.bashrc' >> /home/.bash_profile
 
 RUN gem install tomdoc rdoc && gem install lolcat travis
 
+# docker: "The open-source application container engine"
+RUN wget -O /usr/local/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-1.5.0 \
+    && chmod +x /usr/local/bin/docker
+
 # docker-compose: "Define and run complex applications using Docker"
 RUN wget -O /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` \
     && chmod +x /usr/local/bin/docker-compose
@@ -72,3 +76,9 @@ RUN vam install youcompleteme
 
 # Stop unnecessary services from starting
 RUN rm -rf /etc/service/cron /etc/service/sshd
+
+# Docker-in-docker: https://github.com/jpetazzo/dind
+ADD wrapdocker /usr/local/bin/wrapdocker
+RUN chmod +x /usr/local/bin/wrapdocker
+
+CMD ["/sbin/my_init", "--skip-startup-files", "--quiet", "--", "wrapdocker"]
