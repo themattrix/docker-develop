@@ -35,7 +35,7 @@ ENV HISTFILE /home/.bash_history/history
 # cache for this RUN command whenever we want to update this repo.
 RUN git clone https://github.com/themattrix/home.git \
     && cd /home \
-    && git checkout ba28ca4
+    && git checkout 1cbed08
 
 # Set locale
 RUN locale-gen en_US.UTF-8 && /usr/sbin/update-locale LANG=en_US.UTF-8
@@ -45,20 +45,20 @@ RUN echo 'source ~/.bashrc' >> /home/.bash_profile
 RUN gem install tomdoc rdoc && gem install lolcat travis
 
 # docker: "The open-source application container engine"
-RUN wget -O /usr/local/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-1.5.0 \
+RUN wget -O /usr/local/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-1.6.0 \
     && chmod +x /usr/local/bin/docker
 
 # docker-compose: "Define and run complex applications using Docker"
-RUN wget -O /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` \
+RUN wget -O /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` \
     && chmod +x /usr/local/bin/docker-compose
 
 # docker-machine: "Machine management for a container-centric world"
-RUN wget -O /usr/local/bin/docker-machine https://github.com/docker/machine/releases/download/v0.1.0/docker-machine_linux-amd64 \
+RUN wget -O /usr/local/bin/docker-machine https://github.com/docker/machine/releases/download/v0.2.0/docker-machine_linux-amd64 \
     && chmod +x /usr/local/bin/docker-machine
 
 # Fuzzy history utility. Seems nicer than hh.
 RUN git clone https://github.com/junegunn/fzf.git /home/.fzf \
-    && (cd /home/.fzf && git checkout 0.9.4) \
+    && (cd /home/.fzf && git checkout 0.9.7-1) \
     && (yes | /home/.fzf/install)
 
 RUN wget -O - https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | \
@@ -67,7 +67,7 @@ RUN wget -O - https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz |
 # Interactive grep is pretty nice!
 RUN pip install percol==0.1.0
 
-ADD https://raw.githubusercontent.com/junegunn/vim-plug/0.5.7/plug.vim \
+ADD https://raw.githubusercontent.com/junegunn/vim-plug/0.7.1/plug.vim \
     /home/.vim/autoload/plug.vim
 
 # Install vim plugins
