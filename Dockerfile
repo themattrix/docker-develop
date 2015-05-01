@@ -1,4 +1,4 @@
-FROM phusion/baseimage:latest
+FROM krallin/ubuntu-tini:14.04
 
 MAINTAINER Matthew Tardiff <mattrix@gmail.com>
 
@@ -74,11 +74,8 @@ ADD https://raw.githubusercontent.com/junegunn/vim-plug/0.7.1/plug.vim \
 RUN vim -u /home/.vim_plug -c 'PlugInstall|q!|q!' > /dev/null
 RUN vam install youcompleteme
 
-# Stop unnecessary services from starting
-RUN rm -rf /etc/service/cron /etc/service/sshd
-
 # Docker-in-docker: https://github.com/jpetazzo/dind
 ADD wrapdocker /usr/local/bin/wrapdocker
 RUN chmod +x /usr/local/bin/wrapdocker
 
-CMD ["/sbin/my_init", "--skip-startup-files", "--quiet", "--", "wrapdocker"]
+CMD ["wrapdocker"]
