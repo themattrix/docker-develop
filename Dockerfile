@@ -69,13 +69,6 @@ RUN wget -O - https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz |
 # thefuck: "Magnificent app which corrects your previous console command"
 RUN pip install percol==0.1.0 eg==0.1.0 thefuck==1.38
 
-# PathPicker, kinda like percol but better for output containing paths.
-RUN git clone https://github.com/facebook/PathPicker.git /home/.pathpicker \
-    && cd /home/.pathpicker \
-    && git checkout 0.5.5 \
-    && chmod +x fpp \
-    && ln /home/.pathpicker/fpp /usr/local/bin/fpp
-
 ADD https://raw.githubusercontent.com/junegunn/vim-plug/0.7.1/plug.vim \
     /home/.vim/autoload/plug.vim
 
