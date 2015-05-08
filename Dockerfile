@@ -15,9 +15,9 @@ RUN add-apt-repository -y ppa:ultradvorka/ppa
 RUN apt-get update \
     && apt-get -y install \
         iptables ca-certificates lxc apt-transport-https \
-        tmux git vim htop socat man ruby ruby1.9.1-dev \
+        tmux git vim htop socat man ruby2.0 ruby2.0-dev \
         bash-completion curl python-pygments vim-youcompleteme \
-        python-pip sshfs \
+        python-pip python-dev sshfs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -35,14 +35,14 @@ ENV HISTFILE /home/.bash_history/history
 # cache for this RUN command whenever we want to update this repo.
 RUN git clone https://github.com/themattrix/home.git \
     && cd /home \
-    && git checkout 1cbed08
+    && git checkout e871fd5
 
 # Set locale
 RUN locale-gen en_US.UTF-8 && /usr/sbin/update-locale LANG=en_US.UTF-8
 
 RUN echo 'source ~/.bashrc' >> /home/.bash_profile
 
-RUN gem install tomdoc rdoc && gem install lolcat travis
+RUN gem2.0 install lolcat && gem2.0 install travis -v 1.7.6 --no-rdoc --no-ri
 
 # docker: "The open-source application container engine"
 RUN wget -O /usr/local/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-1.6.0 \
@@ -58,14 +58,23 @@ RUN wget -O /usr/local/bin/docker-machine https://github.com/docker/machine/rele
 
 # Fuzzy history utility. Seems nicer than hh.
 RUN git clone https://github.com/junegunn/fzf.git /home/.fzf \
-    && (cd /home/.fzf && git checkout 0.9.7-1) \
+    && (cd /home/.fzf && git checkout 0.9.11) \
     && (yes | /home/.fzf/install)
 
 RUN wget -O - https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz | \
     tar -C /usr/local -xz
 
-# Interactive grep is pretty nice!
-RUN pip install percol==0.1.0
+# percol: "adds flavor of interactive filtering to the traditional pipe concept of UNIX shell"
+# eg: "Useful examples at the command line"
+# thefuck: "Magnificent app which corrects your previous console command"
+RUN pip install percol==0.1.0 eg==0.1.0 thefuck==1.38
+
+# PathPicker, kinda like percol but better for output containing paths.
+RUN git clone https://github.com/facebook/PathPicker.git /home/.pathpicker \
+    && cd /home/.pathpicker \
+    && git checkout 0.5.5 \
+    && chmod +x fpp \
+    && ln /home/.pathpicker/fpp /usr/local/bin/fpp
 
 ADD https://raw.githubusercontent.com/junegunn/vim-plug/0.7.1/plug.vim \
     /home/.vim/autoload/plug.vim
