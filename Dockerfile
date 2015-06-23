@@ -49,7 +49,7 @@ RUN wget -O /usr/local/bin/docker https://get.docker.com/builds/Linux/x86_64/doc
     && chmod +x /usr/local/bin/docker
 
 # docker-compose: "Define and run complex applications using Docker"
-RUN wget -O /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.7.0/docker-compose-`uname -s`-`uname -m` \
+RUN wget -O /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.3.1/docker-compose-`uname -s`-`uname -m` \
     && chmod +x /usr/local/bin/docker-compose
 
 # docker-machine: "Machine management for a container-centric world"
